@@ -16,6 +16,3 @@
 //= require_tree .
 //= require box
 //= require bootstrap-sprockets
-
-import "popper"
-import "bootstrap"
