@@ -36,7 +36,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "newrelic_rpm"
-gem "lograge"
+# gem "lograge"
 gem "sassc-rails" # necessary with rails 7 +
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
