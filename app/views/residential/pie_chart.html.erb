@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 10px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+</style>
+
+<body>
+
+<script>
+$(function() {
+  // From: http://bl.ocks.org/mbostock/3887235
+  // Set the dimensions
+  var width  = 960,
+      height = 510,
+      radius = Math.min(width, height) / 2;
+
+  var totals = {};
+  var color  = d3.scale.category20c();
+
+  // variable for pie pieces
+  var arc = d3.svg.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(0);
+
+  var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) { return totals[d]; });
+
+  // add the pie chart to the page
+  var svg = d3.select("#piechart").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  // fetch the data
+  $.getJSON('/residential/pie_data', function(data) {
+    totals = data.totals;
+    // make each pie piece
+    var g = svg.selectAll(".arc")
+        .data(pie(d3.keys(totals)))
+      .enter().append("g")
+        .attr("class", "arc")
+      .on("mouseover", function(d) {
+        d3.select(this).select("text").style("font-weight", "bold")
+        d3.select(this).select("text").style("font-size", "1.25em")
+      })
+      .on("mouseout", function(d) {
+        d3.select(this).select("text").style("font-weight", "normal")
+        d3.select(this).select("text").style("font-size", "1em")
+      })
+    ;
+
+    // fill in the color
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data); });
+
+    // add the jurisdiction name
+    var pos = d3.svg.arc().innerRadius(radius+20).outerRadius(radius+20);
+    g.append("text")
+      .attr("transform", function(d) {
+        return "translate(" + pos.centroid(d) + ")";
+       })
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.data; });
+  });
+});
+</script>
+<div id="piechart"></div>
+<p><%= link_to 'Home', root_path, :class => 'btn btn-default btn-xs btn-success' %></p>
+</body>

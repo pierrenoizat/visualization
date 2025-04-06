@@ -20,7 +20,7 @@
 # Any libraries that use a connection pool or another resource pool should
 # be configured to provide at least as many connections as the number of
 # threads. This includes Active Record's `pool` parameter in `database.yml`. 
-workers Integer(ENV['WEB_CONCURRECY'] || 2)
+workers Integer(ENV['WEB_CONCURRECY'] || 0) # weird bug when puma NOT in single mode
 threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 
@@ -30,9 +30,12 @@ preload_app!
 port ENV.fetch("PORT", 3000)
 environment ENV['RACK_ENV'] || 'development'
 
-on_worker_boot do 
-	ActiveRecord::Base.establish_connection
+on_worker_boot do
+  # Worker-specific setup for Rails 4.1 to 5.2, after 5.2 it's not needed
+  # See: https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server#on-worker-boot
+  ActiveRecord::Base.establish_connection
 end
+
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
@@ -40,3 +43,4 @@ plugin :tmp_restart
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.
 # In other environments, only set the PID file if requested.
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+
