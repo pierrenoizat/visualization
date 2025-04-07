@@ -20,9 +20,14 @@ Things you may want to cover:
 * Deployment instructions:
 
 * If heroku build fails because of dependancies, run
+
 bundle lock --add-platform x86_64-linux
+
 git add .
+
 git commit -am "message"
+
 git push heroku main
+
 
 Then remove Gemfile.lock to run on local platform
