@@ -8,15 +8,9 @@ class ResidentialController < ApplicationController
     @json_tree = data.read
   end
 
-  def data
-    totals = SalesFigure.group(:jurisdiction).sum(:total_sales)
-    render :json => { :totals => totals }
-  end
-
-  def pie_chart; end
-  def pie_data
-    totals = SalesFigure.group(:jurisdiction).sum(:total_sales)
-    render :json => { :totals => totals }
+  def pie
+    @totals = SalesFigure.group(:jurisdiction).sum(:total_sales).to_json
+    # render :json => { :totals => totals }
   end
 
   def scatter_chart; end
