@@ -27,7 +27,7 @@ g.arc {
       height = 500,
       radius = Math.min(width, height) / 2;
 
-  var totals = {};
+  var totals = <%= raw @totals %>;
   var color  = d3.scale.category20b();
 
   // variable for pie pieces
@@ -48,7 +48,7 @@ g.arc {
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
   // fetch the data
-    totals = <%= raw @totals %>;
+    
     // totals = data.totals;
     // make each pie piece
     var g = svg.selectAll(".arc")
