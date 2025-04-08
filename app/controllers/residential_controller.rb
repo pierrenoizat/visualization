@@ -10,14 +10,20 @@ class ResidentialController < ApplicationController
 
   def pie
     @totals = SalesFigure.group(:jurisdiction).sum(:total_sales).to_json
-    # render :json => { :totals => totals }
   end
-
-  def scatter_chart; end
+  def scatter; end
   def scatter_data
     data = SalesFigure.
       select(:id, :zipcode, :jurisdiction, :median_value, :total_sales).
       order(:jurisdiction)
     render :json => { :scatter_data => data }
   end
+
+  # def scatter_chart; end
+  # def scatter_data
+  #  data = SalesFigure.
+  #    select(:id, :zipcode, :jurisdiction, :median_value, :total_sales).
+  #    order(:jurisdiction)
+  #  render :json => { :scatter_data => data }
+  #end
 end

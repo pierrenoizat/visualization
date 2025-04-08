@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<style>
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+
+</style>
 
 <body>
-
+<div id="chart"></div>
 <script>
-$(function() {
+
   // From: http://bl.ocks.org/mbostock/3887235
   // Set the dimensions
   // From: http://bl.ocks.org/mbostock/5977197
@@ -47,7 +61,7 @@ $(function() {
       .attr("class", "tooltip")
       .style("opacity", 0);
 
-  $.getJSON('/residential/scatter_data', function(data) {
+$.getJSON('/residential/scatter_data', function(data) {
     data = data.scatter_data;
 
     // don't want dots overlapping axis, so add in buffer to data domain
@@ -129,9 +143,8 @@ $(function() {
         .attr("dy", ".35em")
         .style("text-anchor", "end")
         .text(function(d) { return d; });
-      })
-  })
+      });
+
 </script>
-<div id="chart"></div>
 <p><%= link_to 'Home', root_path, :class => 'btn btn-default btn-xs btn-success' %></p>
 </body>

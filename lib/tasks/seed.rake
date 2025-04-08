@@ -1,4 +1,5 @@
 require 'csv'
+require 'open-uri'
 
 namespace :db do
   namespace :seed do
@@ -9,12 +10,15 @@ namespace :db do
         Float(string.sub(/\$/, ''))
       end
 
-      filename = File.join(Rails.root, 'db', 'data_files', 'data.csv')
-      CSV.foreach(filename, :headers => true) do |row|
-        puts $. if $. % 10000 == 0
-        regex  = /.*(\d{2}\.\d*), (-\d{2}\.\d*)/
-        latlng = row['Zip Code (Geocoded)'].match(regex)
-        values = {
+      filename = "https://hashtree-test.s3.eu-west-1.amazonaws.com/data.csv"
+
+      URI.open(filename) do |file|
+      
+        CSV.foreach(file, :headers => true) do |row|
+          puts $. if $. % 10000 == 0
+          regex  = /.*(\d{2}\.\d*), (-\d{2}\.\d*)/
+          latlng = row['Zip Code (Geocoded)'].match(regex)
+          values = {
           :year                 => row['Year'],
           :geo_code             => row['Geo Code'],
           :jurisdiction         => row['Jurisdictions'],
@@ -30,8 +34,9 @@ namespace :db do
           :mean_value_out_pfa   => float(row['MeanVal_OutPFA']),
           :latitude             => float(latlng[1]),
           :longitude            => float(latlng[2])
-        }
-        SalesFigure.create(values)
+          }
+          SalesFigure.create(values)
+        end
       end
     end
   end
