@@ -1,0 +1,34 @@
+<p style="color: green"><%= notice %></p>
+<style>
+  
+body { 
+text-align: center; 
+} 
+
+.cell { 
+height: 120px; 
+width: 120px; 
+border: 1.5px solid grey; 
+border-style: inset; 
+} 
+
+.blackcell { 
+background-color: black; 
+} 
+
+.whitecell { 
+background-color: white; 
+}
+
+  
+</style>
+
+<%= render @board %>
+
+<div>
+  <!-- <%= link_to "Edit this board", edit_board_path(@board) %> | -->
+  <!-- <%= link_to "Back to boards", boards_path %> -->
+
+  <!-- <%= button_to "Destroy this board", @board, method: :delete %> -->
+  <p><%= link_to 'Home', root_path, :class => 'btn btn-default btn-xs btn-success' %></p>
+</div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html> 
+<html> 
+
+<head> 
+  <title>Chess board</title> 
+</head> 
+
+<body> 
+
+  <script type="text/javascript"> 
+
+    var center = document.createElement('center'); 
+
+// Create a table element 
+var ChessTable = document.createElement('table'); 
+for (var i = 0; i < 4; i++) { 
+
+  // Create a row 
+  var tr = document.createElement('tr'); 
+  for (var j = 0; j < 4; j++) { 
+
+    // Create a cell 
+    var td = document.createElement('td'); 
+      td.setAttribute('class', 'cell whitecell'); 
+      // Append the cell to its row 
+      tr.appendChild(td); 
+  } 
+  // Append the row 
+  ChessTable.appendChild(tr); 
+} 
+center.appendChild(ChessTable); 
+
+// Modifying table attribute properties 
+ChessTable.setAttribute('cellspacing', '0'); 
+ChessTable.setAttribute('width', '480px'); 
+document.body.appendChild(center);
+
+    
+  </script> 
+
+<div id="<%= dom_id board %>">
+  <p>
+    <!-- <strong>Game:</strong> -->
+    <!-- <%= board.game %> -->
+  </p>
+
+  <p>
+    <!-- <strong>Score:</strong> -->
+    <!-- <%= board.score %> -->
+  </p>
+
+  <p>
+    <!-- <strong>Side:</strong> -->
+    <!-- <%= board.side %> -->
+  </p>
+
+</div>
+
+</body> 
+
+</html> 

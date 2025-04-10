@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :boards
 
   get 'residential/index'
   get 'residential/tree'

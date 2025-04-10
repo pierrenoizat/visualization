@@ -1,5 +1,6 @@
 class ResidentialController < ApplicationController
   def index
+    @board = Board.first
   end
 
   def tree
